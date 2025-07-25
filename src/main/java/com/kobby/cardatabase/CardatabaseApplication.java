@@ -1,9 +1,6 @@
 package com.kobby.cardatabase;
 
-import com.kobby.cardatabase.domain.Car;
-import com.kobby.cardatabase.domain.CarRepository;
-import com.kobby.cardatabase.domain.Owner;
-import com.kobby.cardatabase.domain.OwnerRepository;
+import com.kobby.cardatabase.domain.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +20,9 @@ public class CardatabaseApplication implements CommandLineRunner {
 
     @Autowired
     private OwnerRepository ownerRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     // after adding this comment, the project should restart
     public static void main(String[] args) {
@@ -51,5 +51,10 @@ public class CardatabaseApplication implements CommandLineRunner {
 
         // print all cars
         carRepository.findAll().forEach(car -> logger.info(car.toString()));
+
+        userRepository.save(new User("user",
+                "$2a$10$NVM0n8ElaRgg7zWO1CxUdei7vWoPg91Lz2aYavh9.f9q0e4bRadue","USER"));
+        userRepository.save(new User("admin",
+                "$2a$10$8cjz47bjbR4Mn8GMg9IZx.vyjhLXR/SKKMSZ9.mP9vpMu0ssKi8GW", "ADMIN"));
     }
 }

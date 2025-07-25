@@ -15,6 +15,7 @@ public class Owner {
     private long ownerId;
     private String firstName, lastName;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private List<Car> cars;
 
@@ -38,9 +39,6 @@ public class Owner {
         this.firstName = firstName;
     }
 
-    @JsonIgnore
-    @OneToMany(cascade=CascadeType.ALL, mappedBy=
-            "owner")
     public List<Car> getCars() {
         return cars;
     }
