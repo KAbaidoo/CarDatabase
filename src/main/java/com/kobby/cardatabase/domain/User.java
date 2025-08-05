@@ -3,6 +3,7 @@ package com.kobby.cardatabase.domain;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "app_user")
 public class User {
 
     @Id
