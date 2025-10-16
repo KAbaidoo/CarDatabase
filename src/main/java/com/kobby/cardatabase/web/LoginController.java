@@ -32,7 +32,7 @@ public class LoginController {
         Authentication auth = authenticationManager.authenticate(creds);
 
         // Generate token
-        String jwts = jwtService.getToken(auth.getName());
+        String jwts = jwtService.getToken(auth.getName(), auth.getAuthorities().iterator().next().getAuthority());
 
         // Build response with the generated token
         return ResponseEntity.ok()

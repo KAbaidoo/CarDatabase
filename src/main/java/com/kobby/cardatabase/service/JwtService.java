@@ -20,9 +20,10 @@ public class JwtService {
 
 
     // Generate JWT token
-    public String getToken(String username) {
+    public String getToken(String username, String role) {
         String token = Jwts.builder()
                 .setSubject(username)
+                .claim("role", role)
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
                 .signWith(key)
                 .compact();
@@ -31,19 +32,15 @@ public class JwtService {
 
     // Get a token from request Authorization header,
     // parse a token and get username
-    public String getAuthUser(HttpServletRequest request) {
+    public io.jsonwebtoken.Claims getAuthUser(HttpServletRequest request) {
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         if (token != null) {
-            String user = Jwts.parserBuilder()
+            return Jwts.parserBuilder()
                     .setSigningKey(key)
                     .build()
                     .parseClaimsJws(token.replace(PREFIX, ""))
-                    .getBody()
-                    .getSubject();
-
-            if (user != null)
-                return user;
+                    .getBody();
         }
 
         return null;
